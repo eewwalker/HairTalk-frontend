@@ -87,3 +87,7 @@
       font-family: 'Mona Sans';
       font-feature-settings: "ss01" on, "ss03" on, "ss06" on, "ss07" on; /* Turns on square diacritical marks, small letter L distinct from capital I, and alternative small letter g */
     }
+    body {
+      background-color: #0c6999;
+      padding: 2rem;
+    }

@@ -1,14 +1,25 @@
-import { Login } from '@/components/Login';
-import { buttonVariants } from "@/components/ui/button"
-import Link from 'next/link';
+import Login  from '@/components/Login';
+import Sidebar from '@/components/Sidebar';
+import Questions from '@/components/Questions';
 
-export default function Home() {
+export default function Dashboard() {
   return (
-<>
-<h1 className="text-7xl">HAIR TALK</h1>
-<Link href='/questions' className={buttonVariants({ variant: "outline" })}>Click here</Link>
-
-<Login/>
-</>
+    <>
+      <div className="grid min-h-screen w-full">
+        <div className="flex items-stretch w-full">
+          <div className="flex-grow">
+            <Sidebar />
+          </div>
+          <div className="flex-initial justify-end relative">
+            <Login/>
+          </div>
+        </div>
+      </div>
+      <div className="col-span-4 md:col-span-1">
+        <Questions />
+      </div>
+    </>
   );
 }
+
+
