@@ -1,0 +1,19 @@
+
+.sidebar {
+  background-color: #c1f5fe;
+  padding: 20px;
+  width: 200px;
+}
+
+.logo {
+  color: #ff99dd;
+  margin-bottom: 20px;
+}
+
+.menu a {
+  display: block;
+  margin-bottom: 10px;
+  background-color: #00a351;
+  padding: 20px;
+  width: 200px;
+}
