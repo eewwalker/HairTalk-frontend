@@ -1,8 +1,9 @@
-import Login  from '@/components/Login';
+import AuthComponent from '@/components/AuthComponent';
 import Sidebar from '@/components/Sidebar';
 import Questions from '@/components/Questions';
 
 export default function Dashboard() {
+  
   return (
     <>
       <div className="grid min-h-screen w-full">
@@ -11,7 +12,7 @@ export default function Dashboard() {
             <Sidebar />
           </div>
           <div className="flex-initial justify-end relative">
-            <Login/>
+            <AuthComponent/>
           </div>
         </div>
       </div>
