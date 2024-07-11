@@ -3,8 +3,8 @@ import { createNewUser } from "@/src/lib/api";
 
 export default async function POST(request: NextRequest) {
   try{
-    const {name, location} = await request.json();
-    const user = await createNewUser(name, location);
+    const {name, password, location} = await request.json();
+    const user = await createNewUser(name, password, location);
 
     return NextResponse.json(user, {status: 200});
   }catch(error) {
