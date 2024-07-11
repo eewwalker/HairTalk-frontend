@@ -1,8 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
+import { createNewUser } from "@/src/lib/api";
 
 export default async function POST(request: NextRequest) {
-  const {name, location} = await request.json();
-  const user = await createUser(name, location);
+  try{
+    const {name, location} = await request.json();
+    const user = await createNewUser(name, location);
 
-  return NextResponse.json(user, {status: 200});
+    return NextResponse.json(user, {status: 200});
+  }catch(error) {
+    console.error('Failed to create new user:', error);
+
+    return NextResponse.json({error: 'Failed to create new user'}, {status:500})
+  }
+
 }
