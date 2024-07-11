@@ -1,6 +1,4 @@
-import { fetchQuestions } from "@/lib/api";
-import { Link } from "lucide-react";
-import { Question } from "@/types";
+import { fetchQuestions } from "@/src/lib/api";
 
 export default async function Questions() {
     const questions = await fetchQuestions();

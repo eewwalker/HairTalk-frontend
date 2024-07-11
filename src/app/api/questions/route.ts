@@ -1,15 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import {createNewUser} from '@/lib/api';
+import {createNewQuestion} from '@/src/lib/api';
 
 export async function POST(request: NextRequest) {
   try{
-    const {name, location} = await request.json();
-    const user = await createNewUser(name, location);
+    const {userId, content, createdAt} = await request.json();
+    const question = await createNewQuestion(userId, content, createdAt);
 
-    return NextResponse.json(user, {status: 200});
+    return NextResponse.json(question, {status: 200});
   }catch(error) {
-    console.error('Failed to create new user:', error);
+    console.error('Failed to create new question:', error);
 
-    return NextResponse.json({error: 'Failed to create new user'}, {status: 500})
+    return NextResponse.json({error: 'Failed to create new question'}, {status: 500})
   }
 }
