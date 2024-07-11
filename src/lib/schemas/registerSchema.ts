@@ -7,6 +7,9 @@ export const registerSchema = z.object({
   }),
   password: z.string().min(6, {
     message: 'Password must be at least 6 characters'
+  }),
+  location: z.string().min(2, {
+    message: "Location must be at least 2 characters"
   })
 })
 

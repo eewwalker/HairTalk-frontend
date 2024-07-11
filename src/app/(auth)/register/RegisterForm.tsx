@@ -50,6 +50,17 @@ const RegisterForm = () => {
                                 />
                                 {errors.password?.message && <p>{errors.password?.message}</p>}
                             </div>
+                            <div className="grid gap-2 text-[#66ffec]">
+                                <Label htmlFor="location">location</Label>
+                                <Input
+                                    className="text-[#0c6999]"
+                                    autoComplete="location"
+                                    id="location"
+                                    type="text"
+                                    {...register('location')}
+                                />
+                                {errors.location?.message && <p>{errors.location?.message}</p>}
+                            </div>
                             <Button
                                 type="submit"
                                 className="w-full hover:bg-[#2584b3] hover:text-[#66ffec] rounded-full bg-[#c1f5fe] text-[#0c6999]">
