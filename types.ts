@@ -3,7 +3,6 @@ export interface User {
   name: string;
   location: string
 }
-
 export interface Question {
   id: number;
   userId: number;
@@ -11,7 +10,6 @@ export interface Question {
   created_at: Date
 
 }
-
 export interface Overlay {
   onClose: () => void;
 }
