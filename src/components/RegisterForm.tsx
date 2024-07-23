@@ -1,22 +1,23 @@
 "use client";
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Button } from "@/src/components/ui/button";
+import { Input } from "@/src/components/ui/input";
+import { Label } from "@/src/components/ui/label";
 import { useForm } from "react-hook-form";
 import { RegisterSchema, registerSchema } from "@/src/lib/schemas/registerSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const RegisterForm = () => {
-    const { register, handleSubmit, formState: { errors, isValid } } = useForm<RegisterSchema>({
+    const { register, handleSubmit, formState: { errors } } = useForm<RegisterSchema>({
         resolver: zodResolver(registerSchema),
         mode: 'onTouched'
     });
 
     const onSubmit = (data: RegisterSchema) => {
-
+        console.log(data)
     };
+
     return (
         <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-1 xl:min-h-[800px]">
             <div className="flex items-center justify-center py-12">

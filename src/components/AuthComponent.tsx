@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { Scissors } from "lucide-react";
-import OverlayComponent from '@/components/OverlayComponent';
+import OverlayComponent from '@/src/components/OverlayComponent';
 
 /** AuthComponent handles signup/login/logout
  *  Props:None

@@ -1,4 +1,4 @@
-import { Question, Resp, Token } from '@/types';
+import { Question, Resp, Token, User } from '@/types';
 
 /** USER */
 
@@ -43,6 +43,7 @@ export async function logInUser(username: string, password: string): Promise<Tok
         username,
         password
       }),
+      credentials: 'include',
       next: { revalidate: 0 }
     });
 
@@ -57,6 +58,26 @@ export async function logInUser(username: string, password: string): Promise<Tok
     throw error;
   }
 
+}
+
+//Get user from DB => return User | null
+export async function getUser(userId:number):Promise<User | null> {
+  try{
+    const resp = await fetch(`${process.env.BACKEND_API_URL}/users/${userId}`, {
+      method: 'GET',
+      credentials: 'include',
+    });
+    if(!resp.ok) {
+      const errorData = await resp.json();
+      throw new Error(errorData.message || "Failed to successfully fetch user");
+    }
+    const user: User = await resp.json();
+    return user;
+
+  }catch(error) {
+    console.error('Error fetching user:', error);
+    return null;
+  }
 }
 
 
