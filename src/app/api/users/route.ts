@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createNewUser } from "@/src/lib/api";
 
-export default async function registerUser(request: NextRequest) {
+export async function POST(request: NextRequest) {
   try{
     const {name, password, location} = await request.json();
     const user = await createNewUser(name, password, location);

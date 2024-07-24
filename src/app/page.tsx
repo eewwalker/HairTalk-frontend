@@ -1,24 +1,24 @@
-import AuthComponent from '@/src/components/AuthComponent';
-import Sidebar from '@/src/components/Sidebar';
-import Questions from '@/src/components/Questions';
+
+import AuthComponent from '../components/AuthComponent';
+import Sidebar from '../components/Sidebar';
+import Questions from '../components/Questions';
+
 
 export default function Dashboard() {
 
   return (
     <>
-      <div className="grid min-h-screen w-full">
-        <div className="flex items-stretch w-full">
-          <div className="flex-grow">
+        <div className="flex flex-col min-h-screen">
+          <div className="flex flex-1">
             <Sidebar />
+            <div className="flex-1 flex flex-col items-center justify-center">
+              <Questions />
+            </div>
           </div>
-          <div className="flex-initial justify-end relative">
-            <AuthComponent/>
+          <div className="fixed top-10 right-5">
+            <AuthComponent />
           </div>
         </div>
-      </div>
-      <div className="col-span-4 md:col-span-1">
-        <Questions />
-      </div>
     </>
   );
 }
