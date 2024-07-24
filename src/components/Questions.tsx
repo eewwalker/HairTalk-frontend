@@ -1,12 +1,20 @@
-import { fetchQuestions } from "@/src/lib/api";
+import { fetchQuestions } from '@/src/lib/api';
+import Question from './Question';
+import {Question as QuestionType} from "@/types";
+import AskQuestion from './AskQuestion';
 
 export default async function Questions() {
-    const questions = await fetchQuestions();
+    const questions: QuestionType[] = await fetchQuestions();
+
     return (
         <>
-            <ul>
-                {questions.map(q => <div key={q.id}>{q.content}</div>)}
-            </ul>
+        <div className='flex flex-col w-full max-w-2xl mx-auto'>
+        <AskQuestion/>
+         {questions.map(q => <Question key={q.id}question = {q}/>)}
+         </div>
         </>
     );
 }
+
+
+
