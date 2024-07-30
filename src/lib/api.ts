@@ -31,8 +31,8 @@ export async function createNewUser(username: string, password: string, location
 
 }
 
-//Login user => return 	"access_token": **** || error
-export async function logInUser(username: string, password: string): Promise<Token> {
+//Login user => return 	user || error
+export async function logInUser(username: string, password: string): Promise<User> {
   try {
     const resp = await fetch(`${process.env.BACKEND_API_URL}/auth/login`, {
       method: 'POST',
@@ -51,7 +51,15 @@ export async function logInUser(username: string, password: string): Promise<Tok
       const errorData = await resp.json();
       throw new Error(errorData.message || "Failed to successfully logged in");
     }
-    return resp.json();
+    const data = await resp.json();
+    const user: User = {
+      id: data.user.id,
+      username: data.user.username,
+      password: '',
+      location: data.user.location,
+      access_token: data.access_token
+    }
+    return user;
 
   } catch (error) {
     console.error('Error logging in user:', error);
