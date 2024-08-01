@@ -27,7 +27,7 @@ const { toast } = useToast()
     }
     return (
         <Button
-            className='bg-inherit text-[#f5f1ef] mb-3'
+            className='w-full bg-inherit text-[#f5f1ef] border border-[#f5f1ef]'
             variant="outline"
             onClick={handleSubmit}>
             ask question

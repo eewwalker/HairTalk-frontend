@@ -1,5 +1,5 @@
 import { Button } from "./ui/button";
-import { Overlay } from "@/types";
+import { Overlay } from "@/src/types/types";
 import '@/src/styles/overlay.css';
 import Link from "next/link";
 
