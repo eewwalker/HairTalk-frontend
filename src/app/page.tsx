@@ -3,8 +3,11 @@ import AuthComponent from '../components/AuthComponent';
 import Sidebar from '../components/Sidebar';
 import Questions from '../components/Questions';
 
-
-export default function Dashboard() {
+/** Home component renders Sidebar, Questions, AuthComponent
+ * Props: none
+ * State: none
+ */
+export default function Home() {
 
   return (
     <>
