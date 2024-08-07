@@ -3,10 +3,15 @@
 import { SessionProvider } from "next-auth/react";
 import { ReactNode } from "react";
 
-export function Providers({children}: {children:ReactNode}) {
+type ProviderProps = {
+    children: ReactNode;
+    session: any;
+};
+
+export function Provider({ children, session }: ProviderProps) {
     return (
-        <SessionProvider>
+        <SessionProvider session={session}>
             {children}
         </SessionProvider>
-    )
+    );
 }
