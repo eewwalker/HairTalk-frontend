@@ -1,18 +1,17 @@
-import { DefaultSession } from "next-auth";
+import { DefaultSession, DefaultUser } from "next-auth";
 
-// Define the User interface
+// // Define the User interface
 export interface User {
-  id: number;
+  id: string;
   username: string;
   password: string;
   location: string | null;
-  access_token?: string;
 }
 
 // Define the Question interface
 export interface Question {
   id: number;
-  user_id: number;
+  user_id: string;
   content: string;
   created_at: Date;
   answers: number;
@@ -28,44 +27,32 @@ export interface Resp {
   message: string;
 }
 
-// Define the Token interface
-export interface Token {
-  access_token: string;
-  userId: number;
-}
-
-// Define a custom UserSession interface that extends the DefaultSession
-export interface UserSession {
-  id: number;
-  username: string;
-  location: string | null;
-  name?: string | null;
-}
-
-// Define a custom Session interface that extends the DefaultSession
-export interface CustomSession extends DefaultSession {
-  accessToken?: string;
-  user: UserSession;
-}
-
-// Extend the NextAuth Session and User types
+// Define the LoginSchema interface
 declare module "next-auth" {
-  interface Session extends CustomSession {}
-  interface User {
-    id: number;
+  interface Session {
+    user: {
+      id: string;
+      username: string;
+      location: string | null;
+      email?: string | null;
+      name?: string | null;
+      image?: string | null;
+    } & DefaultSession["user"];
+  }
+
+  interface User extends DefaultUser {
+    id: string;
     username: string;
-    password: string;
     location: string | null;
-    access_token?: string;
   }
 }
 
-// Extend the NextAuth JWT interface
+// Extend the JWT interface
 declare module "next-auth/jwt" {
   interface JWT {
-    accessToken: string;
-    userId?: number | string;
-    username?: string;
-    location?: string | null;
+    id: string;
+    username: string;
+    location: string | null;
   }
 }
+
