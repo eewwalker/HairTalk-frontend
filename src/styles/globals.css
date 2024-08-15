@@ -95,3 +95,7 @@ body {
 .register {
   background-color: #66ffec;
 }
+
+.hidden {
+  display: none;
+}
