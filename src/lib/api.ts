@@ -1,11 +1,11 @@
-import { Question, Resp, Token, User } from '@/types';
+import { Question, Resp, User } from '@/types';
 
 /** USER */
 
 //Create new user in DB => return 	"message": "User:username registered" || error
 export async function createNewUser(username: string, password: string, location: string): Promise<Resp> {
   try {
-    const resp = await fetch(`${process.env.BACKEND_API_URL}/auth/register`, {
+    const resp = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/auth/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -32,9 +32,9 @@ export async function createNewUser(username: string, password: string, location
 }
 
 //Login user => return 	user || error
-export async function logInUser(username: string, password: string): Promise<User> {
+export async function validateUserCredentials(username: string, password: string): Promise<User | null> {
   try {
-    const resp = await fetch(`${process.env.BACKEND_API_URL}/auth/login`, {
+    const resp = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -43,27 +43,22 @@ export async function logInUser(username: string, password: string): Promise<Use
         username,
         password
       }),
-      credentials: 'include',
-      next: { revalidate: 0 }
     });
 
     if (!resp.ok) {
+      console.log('resp:', resp);
       const errorData = await resp.json();
       throw new Error(errorData.message || "Failed to successfully logged in");
     }
+
     const data = await resp.json();
-    const user: User = {
-      id: data.user.id,
-      username: data.user.username,
-      password: '',
-      location: data.user.location,
-      access_token: data.access_token
-    }
-    return user;
+    console.log('data:', data);
+    console.log('data.user:', data.user);
+    return data.user;
 
   } catch (error) {
     console.error('Error logging in user:', error);
-    throw error;
+    return null;
   }
 
 }
@@ -71,7 +66,7 @@ export async function logInUser(username: string, password: string): Promise<Use
 //Get user from DB => return User | null
 export async function getUser(userId:number):Promise<User | null> {
   try{
-    const resp = await fetch(`${process.env.BACKEND_API_URL}/users/${userId}`, {
+    const resp = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/users/${userId}`, {
       method: 'GET',
       credentials: 'include',
     });
@@ -94,7 +89,7 @@ export async function getUser(userId:number):Promise<User | null> {
 //Get all questions from DB => return [Question, Question..] || error
 export async function fetchQuestions(): Promise<Question[]> {
   try {
-    const resp = await fetch(`${process.env.BACKEND_API_URL}/questions`, {
+    const resp = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/questions`, {
       next: { revalidate: 100 }
     });
     if (!resp.ok) {
@@ -112,7 +107,7 @@ export async function fetchQuestions(): Promise<Question[]> {
 //Create new question in DB => return Question || error
 export async function createNewQuestion(userId: number, content: string, createdAt: Date): Promise<Question> {
   try {
-    const resp = await fetch(`${process.env.BACKEND_API_URL}/questions`, {
+    const resp = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/questions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
