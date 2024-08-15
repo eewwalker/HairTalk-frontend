@@ -1,5 +1,5 @@
 "use client";
-import {Question as QuestionType} from "@/src/types/types";
+import {Question as QuestionType} from "@/types";
 import {useSession} from "next-auth/react"
 
 type Props = {
@@ -29,7 +29,7 @@ export default function Question({question}: Props) {
             </div>
             <div>
                 <span>
-                    {question.user_id}
+                    Something about the user that is posting the question
                 </span>
             </div>
         </div>

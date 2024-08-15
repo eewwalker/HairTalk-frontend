@@ -1,6 +1,6 @@
 import { fetchQuestions } from '@/src/lib/api';
 import Question from './Question';
-import {Question as QuestionType} from "@/src/types/types";
+import {Question as QuestionType} from "@\/types";
 import AskQuestion from './AskQuestion';
 
 export default async function Questions() {
