@@ -1,66 +1,68 @@
-import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-import { logInUser } from "@/src/lib/api";
-import { User, CustomSession } from "@/types"; 
 
-const handler = NextAuth({
+import NextAuth, { NextAuthOptions } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { validateUserCredentials } from "@/src/lib/api";
+import { User } from '@/types';
+
+
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
-      name: "Credentials",
+      name: 'credentials',
       credentials: {
-        username: { label: "Username", type: "text" },
-        password: { label: "Password", type: "password" },
+        username: { label: 'Username', type: 'text' },
+        password: { label: 'Password', type: 'password' }
       },
       async authorize(credentials): Promise<User | null> {
-        if (!credentials) {
-          throw new Error("No credentials provided");
+        if (!credentials?.username || !credentials.password) {
+          return null;
         }
 
-        const user = await logInUser(credentials.username, credentials.password);
-
-        if (user) {
-          return user;
+        const user = await validateUserCredentials(credentials.username, credentials.password);
+        if (!user) {
+          return null;
         }
-        return null;
-      },
-    }),
+        return user;
+      }
+    })
   ],
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
   },
   callbacks: {
     async jwt({ token, user }) {
+      // console.log('JWT callback - user:', user);
       if (user) {
-        token.accessToken = user.access_token as string;
-        const userId = Number(user.id);
-        if (!isNaN(userId)) {
-          token.userId = user.id;
-        } else {
-          console.error("Invalid userId:", user.id);
-        }
+        token.id = user.id;
         token.username = user.username;
         token.location = user.location;
       }
+      // console.log('JWT callback - token:', token);
       return token;
     },
-    async session({ session, token }): Promise<CustomSession> {
-      if (token?.accessToken) {
-        session.accessToken = token.accessToken;
-        session.user = {
-          id: token.userId as number,
-          username: token.username as string,
-          location: token.location as string | null,
-          email: session.user?.email || null,
-          name: session.user?.name || null,
-        };
+    async session({ session, token }) {
+      // console.log('Session callback - token:', token);
+      if (token) {
+        session.user.id = token.id;
+        session.user.username = token.username as string;
+        session.user.location = token.location as string;
+        session.user?.email || null;
+        session.user?.name || null;
+        session.user?.image || null;
       }
+      // console.log('Session callback - session:', session);
       return session;
-    },
+    }
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.AUTH_SECRET,
+  debug: process.env.NODE_ENV === 'development',
   pages: {
-    signIn: "/auth/login",
+    signIn: '/auth/login',
   },
-});
+};
 
-export { handler as GET, handler as POST };
+const handler = NextAuth(authOptions);
+
+export { handler as GET, handler as POST }
+
+
