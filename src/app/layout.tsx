@@ -14,10 +14,10 @@ export default async function RootLayout({ children }: { children: ReactNode; })
   const session = getSession();
   return (
     <html lang="en">
-      <body>
+      <body className='relative'>
         <Provider session={session}>
           <CustomToastProvider>
-          <div className="fixed top-10 right-5">
+          <div className="absolute top-5 right-5 p-1">
             <AuthComponent/>
           </div>
             {children}

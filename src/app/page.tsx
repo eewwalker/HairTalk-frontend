@@ -10,13 +10,13 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex flex-col min-h-screen">
-        <div className="flex flex-1">
+      <div className="min-h-screen grid lg:grid-cols-3 gap-4">
+        <div>
           <Sidebar />
-          <div className="flex-1 flex flex-col items-center justify-center">
+        </div>
+          <div>
             <Questions />
           </div>
-        </div>
       </div>
     </>
   );
