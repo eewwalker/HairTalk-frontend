@@ -105,7 +105,7 @@ export async function fetchQuestions(): Promise<Question[]> {
 }
 
 //Create new question in DB => return Question || error
-export async function createNewQuestion(userId: number, content: string, createdAt: Date): Promise<Question> {
+export async function createNewQuestion(userId: number, title: string, content: string): Promise<Question> {
   try {
     const resp = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/questions`, {
       method: 'POST',
@@ -114,8 +114,8 @@ export async function createNewQuestion(userId: number, content: string, created
       },
       body: JSON.stringify({
         userId,
+        title,
         content,
-        createdAt
       }),
       next: { revalidate: 0 }
     });
