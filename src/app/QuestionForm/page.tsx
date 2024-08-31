@@ -1,7 +1,7 @@
 
 "use client";
-import Link from "next/link";
 
+import {useSession} from 'next-auth/react';
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
@@ -12,6 +12,7 @@ import { createNewQuestion } from "@/src/lib/api";
 import { useRouter } from "next/navigation";
 
 const QuestionForm = () => {
+    const {data:session, status} = useSession();
     const router = useRouter();
     const { register, handleSubmit, formState: { errors } } = useForm<QuestionSchema>({
         resolver: zodResolver(questionSchema),
@@ -20,8 +21,7 @@ const QuestionForm = () => {
 
     const onSubmit = async (data: QuestionSchema) => {
         const {title, content} = data;
-        const userId = getUserId(); // Replace 'getUserId()' with the actual method to get the user ID
-        const resp = await createNewQuestion(userId, title, content);
+        const resp = await createNewQuestion(session!.user.id, title, content);
         console.log('resp', resp)
         router.push('/');
     };
@@ -31,7 +31,7 @@ const QuestionForm = () => {
             <div className="flex items-center justify-center py-12">
                 <div className="mx-auto grid w-[350px] gap-6">
                     <div className="grid gap-2 text-center">
-                        <h1 className="text-5xl font-bold text-[#66ffec]">ask a question!</h1>
+                        <h1 className="text-5xl font-bold text-[#66ffec]">ask a question</h1>
                     </div>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="grid gap-4">
@@ -58,30 +58,24 @@ const QuestionForm = () => {
                                 />
                                 {errors.content?.message && <p>{errors.content?.message}</p>}
                             </div>
-                            {/* <div className="grid gap-2 text-[#66ffec]">
-                                <Label htmlFor="location">location</Label>
+                            <div className="grid gap-2 text-[#66ffec]">
+                                <Label htmlFor="location">tags</Label>
                                 <Input
                                     className="text-[#0c6999]"
                                     autoComplete="location"
                                     id="location"
                                     type="text"
-                                    {...register('location')}
+                                    {...register('tags')}
                                 />
-                                {errors.location?.message && <p>{errors.location?.message}</p>}
-                            </div> */}
+                                {errors.tags?.message && <p>{errors.tags?.message}</p>}
+                            </div>
                             <Button
                                 type="submit"
                                 className="w-full hover:bg-[#2584b3] hover:text-[#66ffec] rounded-full bg-[#c1f5fe] text-[#0c6999]">
-                                sign up
+                                post
                             </Button>
                         </div>
                     </form>
-                    <div className="mt-4 text-center text-sm text-[#66ffec]">
-                        already have an account?{" "}
-                        <Link href="/login" className="text-decoration-none">
-                            login
-                        </Link>
-                    </div>
                 </div>
             </div>
         </div>
