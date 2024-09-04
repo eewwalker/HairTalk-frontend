@@ -1,9 +1,9 @@
 import { ReactNode } from 'react';
 import "@/src/styles/globals.css";
 import { Provider } from "@/src/app/providers";
-import { CustomToastProvider } from '../components/ui/toast';
 import { getSession } from 'next-auth/react';
 import AuthComponent from '../components/AuthComponent';
+import {Toaster} from "@/components/ui/toaster"
 
 export const metadata = {
   title: "Hair Talk",
@@ -16,12 +16,11 @@ export default async function RootLayout({ children }: { children: ReactNode; })
     <html lang="en">
       <body className='relative'>
         <Provider session={session}>
-          <CustomToastProvider>
           <div className="absolute top-5 right-5 p-1">
             <AuthComponent/>
           </div>
             {children}
-          </CustomToastProvider>
+            <Toaster/>
         </Provider>
       </body>
     </html>

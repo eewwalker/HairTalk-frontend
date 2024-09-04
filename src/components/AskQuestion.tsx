@@ -1,8 +1,8 @@
 "use client";
-import { Button } from "./ui/button";
+import { Button } from "../../components/ui/button";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useToast } from "./ui/toast";
+import { useToast } from "@/hooks/use-toast";
 
 
 export default  function AskQuestion() {
@@ -13,7 +13,7 @@ const { toast } = useToast();
 
     const handleSubmit = () => {
         if (session.data?.user) {
-            router.push('/QuestionForm');
+            router.push('/questions/ask');
         } else {
             toast({
                 description: "You must be logged in to ask a question."

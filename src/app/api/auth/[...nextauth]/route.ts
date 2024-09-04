@@ -31,17 +31,15 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async jwt({ token, user }) {
-      // console.log('JWT callback - user:', user);
       if (user) {
         token.id = user.id;
         token.username = user.username;
         token.location = user.location;
       }
-      // console.log('JWT callback - token:', token);
+
       return token;
     },
     async session({ session, token }) {
-      // console.log('Session callback - token:', token);
       if (token) {
         session.user.id = token.id;
         session.user.username = token.username as string;
@@ -50,19 +48,18 @@ export const authOptions: NextAuthOptions = {
         session.user?.name || null;
         session.user?.image || null;
       }
-      // console.log('Session callback - session:', session);
+
       return session;
     }
   },
-  secret: process.env.AUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
   debug: process.env.NODE_ENV === 'development',
   pages: {
     signIn: '/auth/login',
   },
 };
 
-const handler = NextAuth(authOptions);
-
+const handler = NextAuth(authOptions)
 export { handler as GET, handler as POST }
 
 

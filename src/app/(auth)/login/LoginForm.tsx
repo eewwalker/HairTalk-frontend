@@ -2,15 +2,15 @@
 'use client';
 import { useState } from 'react';
 import Link from "next/link";
-import { Button } from "@/src/components/ui/button";
-import { Input } from "@/src/components/ui/input";
-import { Label } from "@/src/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
 import { loginSchema, LoginSchema } from "@/src/lib/schemas/loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
-import { useToast } from "@/src/components/ui/toast";
+import { useToast } from "@/hooks/use-toast";
 import OverlayComponent from "@/src/components/OverlayComponent";
 
 const LoginForm = () => {

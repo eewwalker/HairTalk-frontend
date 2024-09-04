@@ -1,6 +1,6 @@
 
 'use client';
-import { Button } from "./ui/button";
+import { Button } from "../../components/ui/button";
 import { Overlay } from "@/types";
 import '@/src/styles/overlay.css';
 import Link from "next/link";
