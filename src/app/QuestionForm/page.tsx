@@ -3,6 +3,7 @@
 
 import {useSession} from 'next-auth/react';
 import { Button } from "@/src/components/ui/button";
+import { Textarea } from "@/src/components/ui/textarea"
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
 import { useForm } from "react-hook-form";
@@ -50,9 +51,8 @@ const QuestionForm = () => {
                                 <div className="flex items-center">
                                     <Label htmlFor="content">content</Label>
                                 </div>
-                                <Input
+                                <Textarea
                                     id="content"
-                                    type="content"
                                     {...register('content')}
                                     autoComplete="new-content"
                                 />
