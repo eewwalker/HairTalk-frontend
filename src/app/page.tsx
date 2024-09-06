@@ -10,7 +10,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="min-h-screen grid lg:grid-cols-3 gap-4">
+      <div className="min-h-screen grid lg:grid-cols-3 gap-8">
         <div>
           <Sidebar />
         </div>
