@@ -12,7 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createNewQuestion } from "@/src/lib/api";
 import { useRouter } from "next/navigation";
 
-const QuestionForm = () => {
+const AskQuestionPage = () => {
     const {data:session, status} = useSession();
     const router = useRouter();
     const { register, handleSubmit, formState: { errors } } = useForm<QuestionSchema>({
@@ -81,4 +81,4 @@ const QuestionForm = () => {
         </div>
     );
 };
-export default QuestionForm;
+export default AskQuestionPage;
