@@ -11,6 +11,7 @@ import OverlayComponent from '@/src/components/OverlayComponent';
 export default function AuthComponent() {
   const [showOverlay, setShowOverlay] = useState(false);
 
+
   function authMenu() {
     setShowOverlay(true);
   }

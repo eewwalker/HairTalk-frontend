@@ -55,7 +55,7 @@ const LoginForm = () => {
         <div className="flex items-center justify-center py-12">
           <div className="mx-auto grid w-[350px] gap-6">
             <div className="grid gap-2 text-center">
-              <h1 className="text-5xl font-bold text-[#66ffec]">login</h1>
+              <h1 className="text-5xl font-bold text-[#66ffec]">welcome back</h1>
             </div>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="grid gap-4">
