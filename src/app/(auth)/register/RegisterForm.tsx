@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,12 +8,18 @@ import { RegisterSchema, registerSchema } from "@/src/lib/schemas/registerSchema
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createNewUser } from "@/src/lib/api";
 import { useRouter } from "next/navigation";
+import MapBoxAutoComplete from "@/src/components/MapboxAutoComplete";
 
 const RegisterForm = () => {
     const router = useRouter();
-    const { register, handleSubmit, formState: { errors } } = useForm<RegisterSchema>({
+    const { register, handleSubmit, formState: { errors }, control } = useForm<RegisterSchema>({
         resolver: zodResolver(registerSchema),
-        mode: 'onTouched'
+        mode: 'onTouched',
+        defaultValues: {
+            username: '',
+            password: '',
+            location: ''
+        }
     });
 
     const onSubmit = async (data: RegisterSchema) => {
@@ -29,7 +34,7 @@ const RegisterForm = () => {
             <div className="flex items-center justify-center py-12">
                 <div className="mx-auto grid w-[350px] gap-6">
                     <div className="grid gap-2 text-center">
-                        <h1 className="text-5xl font-bold text-[#66ffec]">register</h1>
+                        <h1 className="text-4xl font-bold text-[#66ffec]">create an account</h1>
                     </div>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="grid gap-4">
@@ -58,19 +63,21 @@ const RegisterForm = () => {
                             </div>
                             <div className="grid gap-2 text-[#66ffec]">
                                 <Label htmlFor="location">location</Label>
-                                <Input
+                                <MapBoxAutoComplete
+                                    control={control}
+                                    name="location"
                                     className="text-[#0c6999]"
-                                    autoComplete="location"
-                                    id="location"
-                                    type="text"
-                                    {...register('location')}
+                                    // autoComplete="location"
+                                    // id="location"
+                                    // type="text"
+                                    // {...register('location')}
                                 />
                                 {errors.location?.message && <p>{errors.location?.message}</p>}
                             </div>
                             <Button
                                 type="submit"
                                 className="w-full hover:bg-[#2584b3] hover:text-[#66ffec] rounded-full bg-[#c1f5fe] text-[#0c6999]">
-                                sign up
+                                register
                             </Button>
                         </div>
                     </form>
