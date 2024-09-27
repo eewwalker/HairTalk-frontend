@@ -1,4 +1,4 @@
-import { Question, Resp, User } from '@/types';
+import { Question, Resp, User, PaginatedResponse } from '@/types';
 
 /** USER */
 
@@ -64,20 +64,20 @@ export async function validateUserCredentials(username: string, password: string
 }
 
 //Get user from DB => return User | null
-export async function getUser(userId:number):Promise<User | null> {
-  try{
+export async function getUser(userId: number): Promise<User | null> {
+  try {
     const resp = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/users/${userId}`, {
       method: 'GET',
       credentials: 'include',
     });
-    if(!resp.ok) {
+    if (!resp.ok) {
       const errorData = await resp.json();
       throw new Error(errorData.message || "Failed to successfully fetch user");
     }
     const user: User = await resp.json();
     return user;
 
-  }catch(error) {
+  } catch (error) {
     console.error('Error fetching user:', error);
     return null;
   }
@@ -87,15 +87,19 @@ export async function getUser(userId:number):Promise<User | null> {
 /** QUESTION  */
 
 //Get all questions from DB => return [Question, Question..] || error
-export async function fetchQuestions(): Promise<Question[]> {
+export async function fetchQuestions(page: number = 1, perPage: number = 20): Promise<PaginatedResponse<Question>> {
   try {
-    const resp = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/questions`, {
-      next: { revalidate: 100 }
-    });
+    const resp = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/questions?page=${page}&per_page=${perPage}`,
+      {
+        next: { revalidate: 100 }
+      });
+
     if (!resp.ok) {
+      console.log('response', resp)
       const errorData = await resp.json();
       throw new Error(errorData.message || "Failed to fetch questions");
     }
+    console.log('resp', resp)
     return resp.json();
 
   } catch (error) {
