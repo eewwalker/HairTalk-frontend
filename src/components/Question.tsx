@@ -15,7 +15,10 @@ export default function Question({question}: Props) {
             <div className="text-[#C1F5FE] text-sm mb-2">
                 {dateString}
             </div>
-            <div className="text-[#f5f1ef] text-md mb-1">
+            <div className="text-[#f5f1ef] text-lg mb-1">
+                {question.title}
+            </div>
+            <div className="text-[#f5f1ef] text-sm mb-1">
                 {question.content}
             </div>
             <div className="flex items-center text-sm text-[#ff99dd] space-x-2">
@@ -28,9 +31,9 @@ export default function Question({question}: Props) {
                 <span className="bg-gray-200 text-gray-700 px-2 py-1 rounded-md">tag3</span>
             </div>
             <div>
-                <span>
+                <div className="">
                     Something about the user that is posting the question
-                </span>
+                </div>
             </div>
         </div>
     )
