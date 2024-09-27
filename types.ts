@@ -11,6 +11,7 @@ export interface User {
 // Define the Question interface
 export interface Question {
   id: number;
+  title: string;
   user_id: string;
   content: string;
   created_at: Date;
@@ -56,3 +57,10 @@ declare module "next-auth/jwt" {
   }
 }
 
+//Define Pagination Type
+export interface PaginatedResponse<T> {
+  items: T[];
+  total: number;
+  pages: number;
+  currentPage: number;
+}
