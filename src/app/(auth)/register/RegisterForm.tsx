@@ -67,6 +67,7 @@ const RegisterForm = () => {
                                     control={control}
                                     name="location"
                                     className="text-[#0c6999]"
+                                    //changed from Input to MapBoxAutoComplete
                                     // autoComplete="location"
                                     // id="location"
                                     // type="text"
