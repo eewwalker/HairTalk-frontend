@@ -1,12 +1,19 @@
-
 import Sidebar from '../components/Sidebar';
 import Questions from '../components/Questions';
+import {fetchQuestions} from '@/src/lib/api';
 
-/** Home component renders Sidebar, Questions, AuthComponent
+/** Home component renders Sidebar, Questions
  * Props: none
  * State: none
  */
-export default function Home() {
+export default async function Home({
+  searchParams
+}: {
+  searchParams: {page?:string}
+}) {
+
+  const page = Number(searchParams.page) || 1;
+  const questionData = await fetchQuestions(page);
 
   return (
     <>
@@ -15,7 +22,7 @@ export default function Home() {
           <Sidebar />
         </div>
           <div>
-            <Questions />
+            <Questions initialData={questionData}/>
           </div>
       </div>
     </>
