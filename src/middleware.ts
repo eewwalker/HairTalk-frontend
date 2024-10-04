@@ -8,5 +8,5 @@ export default withAuth({
   },
 })
 
-//tells next which routes the middleware should run 
-export const config = { matcher: ["/questions/ask"] }
+//tells next which routes the middleware should run
+export const config = { matcher: ["/ask"] }
