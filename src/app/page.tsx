@@ -16,7 +16,6 @@ export default async function Home({
   const questionData = await fetchQuestions(page);
 
   return (
-    <>
       <div className="min-h-screen grid lg:grid-cols-3 gap-8">
         <div>
           <Sidebar />
@@ -25,7 +24,6 @@ export default async function Home({
             <Questions initialData={questionData}/>
           </div>
       </div>
-    </>
   );
 }
 
