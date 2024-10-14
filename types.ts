@@ -64,3 +64,10 @@ export interface PaginatedResponse<T> {
   pages: number;
   currentPage: number;
 }
+
+//Define TagInput Type
+  //Dispatch: Type for funcs that use state updates
+export interface TagInputProps {
+  tags: string[];
+  setTags: React.Dispatch<React.SetStateAction<string[]>>;
+}

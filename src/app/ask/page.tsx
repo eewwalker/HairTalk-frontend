@@ -1,28 +1,29 @@
 
 'use client';
 import { useState } from 'react';
-import Link from "next/link";
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { questionSchema, QuestionSchema } from "@/src/lib/schemas/questionSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import OverlayComponent from "@/src/components/OverlayComponent";
+import TagInput from '@/src/components/TagInput';
 
 const AskForm = () => {
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+    const [tags, setTags] = useState<string[]>([]);
 
     const router = useRouter();
-    const { register, handleSubmit, formState: { errors, isValid, isSubmitting } } = useForm<QuestionSchema>({
+    const { register, handleSubmit, control, formState: { errors, isValid, isSubmitting } } = useForm<QuestionSchema>({
         resolver: zodResolver(questionSchema),
         mode: 'onTouched'
     });
-    console.log('valid', isValid)
+
     const onSubmit = async (data: QuestionSchema) => {
-        console.log(data)
+        console.log({...data, tags})
     };
 
     const toggleOverlay = () => {
@@ -71,12 +72,17 @@ const AskForm = () => {
                                 </div>
                                 <div className="grid gap-2 text-[#66ffec]">
                                     <Label htmlFor="tags">tags</Label>
-                                    <Input
-                                        className="text-[#0c6999]"
-                                        required
-                                        autoComplete="tags"
-                                        {...register('tags')}
-                                        placeholder='curly'
+                                    <Controller
+                                        name='tags'
+                                        control={control}
+                                        // className="text-[#0c6999]"
+                                        defaultValue={[]}
+                                        render={({field})=> (
+                                            <TagInput
+                                                tags={tags}
+                                                setTags={setTags}
+                                            />
+                                        )}
                                     />
                                     {errors.tags?.message && <p>{errors.tags?.message}</p>}
                                 </div>
