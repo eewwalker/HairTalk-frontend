@@ -5,24 +5,23 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 
 
-export default  function AskQuestion() {
-const session = useSession();
+export default function AskQuestion() {
+    const session = useSession();
 
-const router = useRouter();
-const { toast } = useToast();
+    const router = useRouter();
+    const { toast } = useToast();
 
     const handleSubmit = () => {
         if (session.data?.user) {
-            router.push('/questions/ask');
+            router.push('/ask');
         } else {
             toast({
                 description: "You must be logged in to ask a question."
-              });
+            });
             router.push('/login');
         }
-    }
+    };
     return (
-        <>
 
         <Button
             className='w-full bg-inherit text-[#f5f1ef] border border-[#f5f1ef]'
@@ -30,8 +29,6 @@ const { toast } = useToast();
             onClick={handleSubmit}>
             ask question
         </Button>
-
-        </>
 
     );
 }
