@@ -7,14 +7,18 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useForm, Controller } from "react-hook-form";
 import { questionSchema, QuestionSchema } from "@/src/lib/schemas/questionSchema";
+import { createNewQuestion } from '@/src/lib/api';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import OverlayComponent from "@/src/components/OverlayComponent";
 import TagInput from '@/src/components/TagInput';
+import {useSession} from 'next-auth/react';
 
 const AskForm = () => {
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
     const [tags, setTags] = useState<string[]>([]);
+    const {data} = useSession();
+    const user = data?.user;
 
     const router = useRouter();
     const { register, handleSubmit, control, formState: { errors, isValid, isSubmitting } } = useForm<QuestionSchema>({
@@ -23,7 +27,9 @@ const AskForm = () => {
     });
 
     const onSubmit = async (data: QuestionSchema) => {
-        console.log({...data, tags})
+        const {title, content} = data;
+        console.log(title, content, user?.id);
+        createNewQuestion(user?.id, title, content)
     };
 
     const toggleOverlay = () => {
@@ -77,7 +83,7 @@ const AskForm = () => {
                                         control={control}
                                         // className="text-[#0c6999]"
                                         defaultValue={[]}
-                                        render={({field})=> (
+                                        render={({ field }) => (
                                             <TagInput
                                                 tags={tags}
                                                 setTags={setTags}
