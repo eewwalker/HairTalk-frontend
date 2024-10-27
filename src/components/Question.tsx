@@ -1,6 +1,7 @@
 "use client";
 import {Question as QuestionType} from "@/types";
 import {useSession} from "next-auth/react"
+import Link from "next/link";
 
 type Props = {
     question: QuestionType
@@ -16,7 +17,7 @@ export default function Question({question}: Props) {
                 {dateString}
             </div>
             <div className="text-[#f5f1ef] text-lg mb-1">
-                {question.title}
+               <Link href={`/questions/${question.id}/${question.title}`}> {question.title}</Link>
             </div>
             <div className="text-[#f5f1ef] text-sm mb-1">
                 {question.content}
