@@ -21,7 +21,7 @@ export default function AuthComponent() {
   }
   return (
     <div>
-      <Button variant='outline' size='icon' className="bg-inherit rounded-full hover:bg-[#c1f5fe]" onClick={authMenu}>
+      <Button aria-label= "Navigate" variant='outline' size='icon' className="bg-inherit rounded-full hover:bg-[#c1f5fe]" onClick={authMenu}>
         <Scissors className='text-[#ff99dd]' />
       </Button>
       {showOverlay && <OverlayComponent onClose={handleClose}/>}
