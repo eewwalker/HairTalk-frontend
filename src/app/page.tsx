@@ -11,9 +11,12 @@ export default async function Home({
 }: {
   searchParams: {page?:string}
 }) {
-
-  const page = Number(searchParams.page) || 1;
+  
+  // await warning for typescript..w/o
+  // Error: Route "/" used `searchParams.page`. `searchParams` should be awaited before using its properties.
+  const page = Number((await searchParams).page) || 1;
   const questionData = await fetchQuestions(page);
+
 
   return (
       <div className="min-h-screen grid lg:grid-cols-3 gap-8">
