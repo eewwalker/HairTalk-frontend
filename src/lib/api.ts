@@ -109,9 +109,16 @@ export async function fetchQuestions(page: number = 1, perPage: number = 20): Pr
 }
 
 //Create new question in DB => return Question || error
-export async function createNewQuestion(userId: string, title: string, content: string): Promise<Question> {
+export async function createNewQuestion(
+  userId: string,
+  title: string,
+  content: string,
+  tags:string[] = [] // Default parameter for ts tags is optional in schema
+): Promise<Question> {
+
+  console.log('Sending request with:', { userId, title, content, tags }); // Debug log
   try {
-    const resp = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/questions`, {
+    const resp = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/questions/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -120,17 +127,23 @@ export async function createNewQuestion(userId: string, title: string, content: 
         userId,
         title,
         content,
+        tags
       }),
       next: { revalidate: 0 }
     });
+
+    console.log('Response status:', resp.status);
+
     if (!resp.ok) {
-      const errorData = await resp.json();
-      throw new Error(errorData.message || "Failed to create new question");
+      const errorText = await resp.text();
+      console.error('Error response:', errorText); // Debug log
+      throw new Error(errorText || "Failed to create new question");
     }
     return resp.json();
 
   } catch (error) {
     console.error('Failed creating new question');
+    // Re-throw the error to be handled by the caller
     throw error;
   }
 }
