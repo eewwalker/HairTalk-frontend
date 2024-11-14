@@ -16,20 +16,38 @@ import {useSession} from 'next-auth/react';
 
 const AskForm = () => {
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
-    const [tags, setTags] = useState<string[]>([]);
-    const {data} = useSession();
-    const user = data?.user;
+    // const [tags, setTags] = useState<string[]>([]);
+    const {data: session} = useSession();
 
     const router = useRouter();
-    const { register, handleSubmit, control, formState: { errors, isValid, isSubmitting } } = useForm<QuestionSchema>({
+    const { register, handleSubmit, control, formState: { errors, isDirty, isSubmitting } } = useForm<QuestionSchema>({
         resolver: zodResolver(questionSchema),
-        mode: 'onTouched'
+        mode: 'onTouched',
+        defaultValues: {
+            title: '',
+            content: '',
+            tags: []
+        }
     });
 
     const onSubmit = async (data: QuestionSchema) => {
-        const {title, content} = data;
-        console.log(title, content, user?.id);
-        createNewQuestion(user?.id, title, content)
+        console.log('Form data:', data);
+        console.log('Tags value:', data.tags);
+        console.log('Type of tags:', typeof data.tags);
+        try{
+            const {title, content, tags} = data;
+
+            if (!(session?.user.id) ) {
+                throw new Error('User not authenticated');
+            }
+            const newQuestion = await createNewQuestion(session?.user.id, title, content, tags)
+            console.log('Question created:', newQuestion);
+
+            router.push('/');
+
+        }catch(error){
+            console.error('Error creating question', error);
+        }
     };
 
     const toggleOverlay = () => {
@@ -79,21 +97,22 @@ const AskForm = () => {
                                 <div className="grid gap-2 text-[#66ffec]">
                                     <Label htmlFor="tags">tags</Label>
                                     <Controller
-                                        name='tags'
+                                        name="tags"
                                         control={control}
-                                        // className="text-[#0c6999]"
-                                        defaultValue={[]}
-                                        render={({ field }) => (
-                                            <TagInput
-                                                tags={tags}
-                                                setTags={setTags}
-                                            />
-                                        )}
+                                        render={({ field }) => {
+                                            console.log('Field value in Controller:', field.value); // Debug log
+                                            return (
+                                                <TagInput
+                                                    tags={field.value}
+                                                    setTags={field.onChange}
+                                                />
+                                            );
+                                        }}
                                     />
                                     {errors.tags?.message && <p>{errors.tags?.message}</p>}
                                 </div>
                                 <Button
-                                    disabled={!isValid || isSubmitting}
+                                    disabled={isSubmitting || !isDirty}
                                     type="submit"
                                     className="w-full hover:bg-[#2584b3] hover:text-[#66ffec] rounded-full bg-[#c1f5fe] text-[#0c6999]">
                                     post
