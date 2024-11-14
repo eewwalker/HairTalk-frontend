@@ -1,4 +1,5 @@
 import { DefaultSession, DefaultUser } from "next-auth";
+import "next-auth"
 
 // // Define the User interface
 export interface User {
@@ -12,10 +13,11 @@ export interface User {
 export interface Question {
   id: number;
   title: string;
-  user_id: string;
+  userId: string;
   content: string;
   created_at: Date;
   answers: number;
+  tags: string[] | [];
 }
 
 // Define the Overlay interface
